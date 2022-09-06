@@ -19,6 +19,11 @@ const Home: NextPage = () => {
       <Stack spacing={2}>
         <Box>{t('common:greeting')}</Box>
         <MenuItem>
+          <Link href="/currency">
+            <a>تسک 1</a>
+          </Link>
+        </MenuItem>
+        <MenuItem>
           <Link href="/languages">
             <a>تسک 2</a>
           </Link>
