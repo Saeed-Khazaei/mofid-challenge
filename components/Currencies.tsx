@@ -5,11 +5,13 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-const Currencies = () => {
-  const [currency, setCurrency] = useState('');
-
+const Currencies = (props: {
+  data: string[];
+  selectedCurrency: string;
+  onChange(c: string): void;
+}) => {
   const handleChange = (event: SelectChangeEvent) => {
-    setCurrency(event.target.value as string);
+    props.onChange(event.target.value as string);
   };
 
   return (
@@ -19,13 +21,15 @@ const Currencies = () => {
         <Select
           labelId="currency-label"
           id="currency"
-          value={currency}
+          value={props.selectedCurrency}
           label="Currency"
           onChange={handleChange}
         >
-          <MenuItem value={'usd'}>usd</MenuItem>
-          <MenuItem value={'bitcoin'}>bitcoin</MenuItem>
-          <MenuItem value={'tether'}>tether</MenuItem>
+          {props.data.map((item) => (
+            <MenuItem key={item} value={item}>
+              {item}
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
     </Box>
