@@ -8,32 +8,35 @@ import Menus from './Menus';
 import Sidebar from './Sidebar';
 import ChangeLanguages from './ChangeLanguages';
 
-const Layout = () => {
+const Layout = (props: { children: React.ReactNode }) => {
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          <Sidebar />
-          <Box
-            component="div"
-            sx={{
-              flexGrow: 1,
-            }}
-          >
+    <>
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static">
+          <Toolbar>
+            <Sidebar />
             <Box
               component="div"
               sx={{
                 flexGrow: 1,
-                display: { xs: 'none', md: 'block' },
               }}
             >
-              <Menus />
+              <Box
+                component="div"
+                sx={{
+                  flexGrow: 1,
+                  display: { xs: 'none', md: 'block' },
+                }}
+              >
+                <Menus />
+              </Box>
             </Box>
-          </Box>
-          <ChangeLanguages />
-        </Toolbar>
-      </AppBar>
-    </Box>
+            <ChangeLanguages />
+          </Toolbar>
+        </AppBar>
+      </Box>
+      <Box p={2}>{props.children}</Box>
+    </>
   );
 };
 
