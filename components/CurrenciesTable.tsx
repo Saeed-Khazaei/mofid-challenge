@@ -9,6 +9,8 @@ import Paper from '@mui/material/Paper';
 import Image from 'next/image';
 import { Stack, Typography } from '@mui/material';
 import { Currency } from '../models/apiResponses';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 const headers = [
   { title: '#', align: 'left' },
@@ -20,6 +22,18 @@ const headers = [
   { title: 'TOTAL VOLUME', align: 'right' },
   { title: 'CIRCULATE SUPPLY', align: 'right' },
 ];
+
+const arrow = (number: number) => {
+  if (number < 0) return <KeyboardArrowDownIcon color="error" />;
+  if (number > 0) return <KeyboardArrowUpIcon color="success" />;
+  return null;
+};
+
+const colorValidation = (number: number) => {
+  if (number < 0) return 'error.main';
+  if (number > 0) return 'success.main';
+  return '';
+};
 
 const CurrenciesTable = (props: { data: Currency[] }) => {
   return (
@@ -68,36 +82,61 @@ const CurrenciesTable = (props: { data: Currency[] }) => {
                   </TableCell>
                   <TableCell align="right">
                     <Typography variant="body1" component="span">
-                      {row.current_price}
+                      ${row.current_price.toLocaleString()}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    <Typography variant="body1" component="span">
-                      {row.price_change_percentage_24h_in_currency}
-                    </Typography>
-                  </TableCell>
-                  <TableCell align="right">
-                    <Typography
-                      variant="body1"
-                      component="span"
-                      sx={{
-                        color:
-                          row.price_change_percentage_7d_in_currency > 0
-                            ? 'success.main'
-                            : 'error.main',
-                      }}
+                    <Stack
+                      direction="row"
+                      alignItems="center"
+                      spacing={1}
+                      justifyContent="flex-end"
                     >
-                      {row.price_change_percentage_7d_in_currency}
+                      {arrow(row.price_change_percentage_24h_in_currency)}
+                      <Typography
+                        variant="body1"
+                        component="span"
+                        textAlign="right"
+                        sx={{
+                          color: colorValidation(
+                            row.price_change_percentage_24h_in_currency
+                          ),
+                        }}
+                      >
+                        {row.price_change_percentage_24h_in_currency.toFixed(2)}
+                        %
+                      </Typography>
+                    </Stack>
+                  </TableCell>
+                  <TableCell align="right">
+                    <Stack
+                      direction="row"
+                      alignItems="center"
+                      spacing={1}
+                      justifyContent="flex-end"
+                    >
+                      {arrow(row.price_change_percentage_7d_in_currency)}
+                      <Typography
+                        variant="body1"
+                        component="span"
+                        sx={{
+                          color: colorValidation(
+                            row.price_change_percentage_7d_in_currency
+                          ),
+                        }}
+                      >
+                        {row.price_change_percentage_7d_in_currency.toFixed(2)}%
+                      </Typography>
+                    </Stack>
+                  </TableCell>
+                  <TableCell align="right">
+                    <Typography variant="body1" component="span">
+                      ${row.market_cap.toLocaleString()}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
                     <Typography variant="body1" component="span">
-                      {row.market_cap}
-                    </Typography>
-                  </TableCell>
-                  <TableCell align="right">
-                    <Typography variant="body1" component="span">
-                      {row.total_volume}
+                      ${row.total_volume.toLocaleString()}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">

@@ -87,7 +87,7 @@ const currency = () => {
         ) : currenciesData.length ? (
           <CurrenciesTable data={currenciesData} />
         ) : null}
-        <Pagination count={10} page={page} onChange={onChangePage} />
+        <Pagination count={50} page={page} onChange={onChangePage} />
       </Stack>
     </Container>
   );
